@@ -75,9 +75,13 @@ func (w *World) Tick() {
 	w.generation++
 }
 
-func MakeWorld(gridSize int) *World {
+func MakeWorld(worldInput int) *World {
+	if worldInput < 0 {
+		return GenPreset(worldInput)
+	}
+
 	//making more square looking world
-	gridHeight := gridSize
+	gridHeight := worldInput
 	gridWidth := gridHeight * 3
 
 	grid := make([][]int, gridHeight)
@@ -93,7 +97,7 @@ func MakeWorld(gridSize int) *World {
 	return &World{
 		grid:       grid,
 		gridWidth:  gridWidth,
-		gridHeight: gridSize,
+		gridHeight: gridHeight,
 	}
 }
 

@@ -28,7 +28,7 @@ func main() {
 					return
 				}
 			default:
-				time.Sleep(time.Millisecond * 100)
+				time.Sleep(time.Millisecond * 50)
 				w.Tick()
 				w.Print()
 			}
@@ -38,17 +38,23 @@ func main() {
 	listenExit(exitChan)
 }
 
-func ReadInputs() (size int, err error) {
+func ReadInputs() (worldInput int, err error) {
 	scanner := bufio.NewScanner(os.Stdin)
-	fmt.Print("Grid size > ")
+
+	fmt.Printf("Available presets: [%v]\n", strings.Join(game.AvailablePresets(), ", "))
+	fmt.Print("Grid size of random world or preset name > ")
 	for scanner.Scan() {
-		nStr := strings.TrimSpace(scanner.Text())
-		gridSize, err := strconv.ParseInt(nStr, 10, 32)
+		input := strings.TrimSpace(scanner.Text())
+		preset := game.FindPreset(input)
+		if preset != nil {
+			return preset.Id, nil
+		}
+		worldInput, err := strconv.ParseInt(input, 10, 32)
 		if err != nil {
 			fmt.Println("Invalid input")
 			continue
 		}
-		return int(gridSize), nil
+		return int(worldInput), nil
 
 	}
 
