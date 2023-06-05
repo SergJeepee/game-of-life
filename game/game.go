@@ -16,7 +16,7 @@ type World struct {
 }
 
 func (w *World) Print() {
-	clearConsole()
+	ClearConsole()
 	fmt.Printf("Generation #%v\nAlive: %v\n", w.generation, w.Alive())
 
 	printBoxBorder(w.gridWidth, true)
@@ -156,6 +156,6 @@ func printBoxBorder(size int, top bool) {
 	fmt.Printf("\n")
 }
 
-func clearConsole() {
+func ClearConsole() {
 	fmt.Print("\033[H\033[2J")
 }
